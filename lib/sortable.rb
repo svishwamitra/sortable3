@@ -26,7 +26,7 @@ module Sortable
       conditions = ''
       p = []
       searchable_columns.each do |key, val|
-        if conditions.length > 0
+        if conditions.length > 0 && params[key].present?
           conditions += " and "
         end
 
