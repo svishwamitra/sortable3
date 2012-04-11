@@ -15,6 +15,7 @@ module Sortable
         s = 'ilike'
         date_form = "::text"  # converts date and timestap to string
       else
+        # need to understand how date filters work with sqlite or mysql
         s = 'like'
         date_form = ''
       end
@@ -54,9 +55,6 @@ module Sortable
       end
       p.unshift(conditions)
       #'***************************************'
-      p '**************************************'
-      p conditions.inspect
-      p '**************************************'
       
       model_name.paginate(:page => params[:page], :per_page => 5).includes(options[:includes]).where("#{model_name.table_name}.name #{s} ?", "#{params[:char]}%").where(p).order(params[:sort])
       #where("name #{s} ?", "#{params[:char]}%").where(p).order(params[:sort])
