@@ -35,19 +35,29 @@ module Sortable
         
         #Code to build conditions according to the data type
         if ['date','datetime'].include?(d_type)
-          conditions +=  "#{val[0] + date_form} #{s} ?"
-          p << "#{params[key].to_s}%"
+          if params[key].present?
+            conditions +=  "#{val[0] + date_form} #{s} ?"
+            p << "#{params[key].to_s}%"
+          end
         elsif ['integer','float'].include?(d_type)
-          conditions +=  "#{val[0].to_s} = ?"
-          p << "#{params[key]}"
+          if params[key].present?
+            conditions +=  "#{val[0].to_s} = ?"
+            p << "#{params[key]}"
+          end
         else
-          conditions += "#{val[0]} #{s} ?"
-          p << "#{params[key].to_s}%"
+          if params[key].present?
+            conditions += "#{val[0]} #{s} ?"
+            p << "#{params[key].to_s}%"
+          end
         end
 
       end
       p.unshift(conditions)
       #'***************************************'
+      p '**************************************'
+      p conditions.inspect
+      p '**************************************'
+      
       model_name.paginate(:page => params[:page], :per_page => 5).includes(options[:includes]).where("#{model_name.table_name}.name #{s} ?", "#{params[:char]}%").where(p).order(params[:sort])
       #where("name #{s} ?", "#{params[:char]}%").where(p).order(params[:sort])
     end
