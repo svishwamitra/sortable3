@@ -12,7 +12,7 @@
       <th></th>
     </tr>
     
-    <%= form_tag(params.merge(:action => :index), {:method => :get}) do %>
+    <%= form_tag(params.merge(:action => :index), {:method => :get, :class=>"form-stacked"}) do %>
     <tr>
       <% @head_columns.each do |key, val| %>
         <th>
